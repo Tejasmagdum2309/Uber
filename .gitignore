@@ -1,0 +1,54 @@
+# Node.js and general project ignores
+node_modules/
+npm-debug.log
+yarn-error.log
+.DS_Store
+.env
+.env.local
+.env.production
+*.log
+
+# Frontend (React, Next.js, or similar)
+build/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Backend (Node.js, Express, etc.)
+# Logs
+logs/
+pids/
+*.pid
+*.log
+
+# Temporary files
+*.swp
+*.swo
+*.swn
+
+# IDEs and Editors (e.g., VSCode, JetBrains)
+.vscode/
+.idea/
+
+# OS-specific files
+Thumbs.db
+ehthumbs.db
+
+# Package Manager directories (if using other package managers)
+# Yarn
+.yarn/
+.yarnrc.yml
+# pnpm
+.pnp/
+.pnp.js
+
+# Any other generated files
+coverage/
+*.tgz
+
+# Ignore the common output directories
+out/
+
+# Ignore test coverage files (if any)
+*.lcov
