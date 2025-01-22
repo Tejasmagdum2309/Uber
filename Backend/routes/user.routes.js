@@ -1,8 +1,8 @@
 import express from "express";
 import {body} from 'express-validator'
 const router = express.Router();
-import { registerUser , loginUser , userProfile } from "../controllers/user.controller.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
+import { registerUser , loginUser , userProfile, logoutUser } from "../controllers/user.controller.js";
+import {authMiddleware} from "../middlewares/auth.middleware.js";
 
 router.post("/register" ,  [
     body("email").isEmail().withMessage("Invalid email"),
@@ -18,6 +18,8 @@ router.post("/login" , [
 ,loginUser);
 
 router.get("/profile" , authMiddleware ,userProfile);
+
+router.get("/logout" , logoutUser )
 
 
 export default router;

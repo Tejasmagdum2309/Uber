@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 
-const createUser = async ({firstName , lastName , email , password}) => {
+const createUser = async ({firstName  , email , password}) => {
     try {
         const user = await User.create({
             firstName,
