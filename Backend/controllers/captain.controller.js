@@ -95,6 +95,7 @@ const getCaptainProfile = async (req, res) => {
 }
 
 const logoutCaptain = async (req, res) => {
+    
     const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
 
     let decode = jwt.decode(token);
@@ -103,13 +104,12 @@ const logoutCaptain = async (req, res) => {
     const now = Math.floor(Date.now() / 1000); // Current time in seconds
     const remainingTTL = decode.exp - now;
 
-    console.log('remainingTTL -->' , remainingTTL);
+    // console.log('remainingTTL -->' , remainingTTL);
 
-    await BlacklistToken.create({ token , createdAt: new Date(Date.now() + remainingTTL * 1000), // Adjust `createdAt` to match the remaining time
+    await BlacklistToken.create({ token , createdAt: new Date(Date.now() + ( remainingTTL * 1000 )), // Adjust `createdAt` to match the remaining time
     });
 
-    await BlacklistToken.create({ token: 'example-token3' });
-    
+    // await BlacklistToken.create({ token: 'example-token3' });
     // const tokens = await BlacklistToken.find();
     // console.log("tokens : ",tokens);
 

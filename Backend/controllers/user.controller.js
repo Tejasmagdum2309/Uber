@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import { validationResult } from "express-validator";
 import { createUser } from "../services/user.services.js";
+import jwt from "jsonwebtoken";
 
 import BlacklistToken from "../models/blackListToken.js";
 
@@ -102,18 +103,28 @@ const userProfile = async (req , res) => {
 }
 
 const logoutUser = async (req , res) => {
+     const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
+
+    let decode = jwt.decode(token);
+
+    // Calculate the remaining time (in seconds)
+    const now = Math.floor(Date.now() / 1000); // Current time in seconds
+    const remainingTTL = decode.exp - now;
+
+    // console.log('remainingTTL -->' , remainingTTL);
+
+    await BlacklistToken.create({ token , createdAt: new Date(Date.now() + ( remainingTTL * 1000 )), // Adjust `createdAt` to match the remaining time
+    });
+
+    // await BlacklistToken.create({ token: 'example-token3' });
+    // const tokens = await BlacklistToken.find();
+    // console.log("tokens : ",tokens);
+
     res.clearCookie('token');
 
-    let token = req.cookies.token || req.headers.authorization.split(" ")[1];
-
-    await BlacklistToken.create({token});
-
-    
-    return res.status(200).json({success : true , message : "Logout successful"});
-    
+    res.status(200).json({ message: 'Logout successfully' });
 }
-
-
+    
 
 export { registerUser ,
          loginUser , 
